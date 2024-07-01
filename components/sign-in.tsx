@@ -2,7 +2,7 @@
 import { signIn } from "@/app/auth"
 import { Button } from "@/components/ui/button";
 
-export function SignIn() {
+export default function SignIn() {
   return (
     <form
       action={async () => {

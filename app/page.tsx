@@ -1,43 +1,22 @@
-import { bids as bidsSchema, items } from "@/db/schema";
 import { database } from "@/db/database";
-import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { revalidatePath } from "next/cache";
-import { SignIn } from "@/components/sign-in";
-import { SignOut } from "@/components/sign-out";
 import { auth } from "@/app/auth";
 
 export default async function Home() {
 
-  const session = await auth();
-
   const allItems = await database.query.items.findMany();
 
-  if(!session) return null;
-  const user = session.user;
-  if(!user) return null;
-
   return (
-    <main className="container mx-auto py-12">
-      {session ? <SignOut /> : <SignIn />}
-      {session?.user && session?.user.name}
-      <form action={async (formData: FormData) => {
-        "use server";
-        // const bid = formData.get("bid") as string;
-        await database?.insert(items).values({
-          name: formData.get("name") as string,
-          userId: session?.user?.id!,
-        });
-        revalidatePath('/');
-      }}>
-        <Input name="name" placeholder="Name your item" />
-        <Button type="submit">Post Item</Button>
+    <main className="container mx-auto py-12 space-y-6">
+      <h2 className="text-2xl font-bold">Items for Sale</h2>
+      <div className="grid grid-cols-4 gap-8">
+        {allItems.map((item) => (
+          <div className="flex flex-col gap-2 border p-8 rounded-lg" key={item.id}>
+            <div className="font-bold">{item.name}</div>
+            <div className="text-sm">Starting Price: {item.startingPrice / 100}</div>
+          </div>
+        ))}
+      </div>
 
-      </form>
-      {allItems.map((item) => (
-        <div key={item.id}>{item.name}</div>
-      ))}
     </main>
   );
 }
