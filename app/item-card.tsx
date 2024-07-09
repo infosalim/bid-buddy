@@ -7,7 +7,7 @@ export function ItemCard({ item }: { item: Item }) {
     return (
         <div className="flex flex-col gap-2 border p-8 rounded-lg space-y-2" key={item.id}>
             <Image
-                src={getImageUrl('milas.jpg')}
+                src={getImageUrl(item.fileKey)}
                 alt='thubm'
                 width={200}
                 height={300}

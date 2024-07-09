@@ -3,7 +3,7 @@
 import {
   createItemAction,
   createUploadUrlAction,
-} from "@/app/bids/create/actions";
+} from "@/app/items/create/actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -40,7 +40,7 @@ export default function CreatePage() {
             await createItemAction({
               name,
               startingPrice: startingPriceInCents,
-              fileName: 'milas.jpg',
+              fileName: file.name,
             });
 
           } catch (err) {

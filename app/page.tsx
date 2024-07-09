@@ -1,5 +1,5 @@
 import { database } from "@/db/database";
-import { ItemCard } from "./item-card";
+import { ItemCard } from "@/app/item-card";
 
 
 export default async function Home() {
